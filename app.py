@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+import time
+from model import train_model
 
 # st.markdown(
 #     """
@@ -63,9 +65,10 @@ if mode == "Exploratory Data Analysis":
 
 if mode == "Model training":
     if uploaded_csv:
+        training_history = st.empty()
         st.markdown("<hr />", unsafe_allow_html=True)
 
-        col1, col2, col3 = st.beta_columns(3)
+        col1, col2 = st.beta_columns(2)
         with col1:
             y_var = st.selectbox(
                 "Choose target variable for prediction",
@@ -79,14 +82,15 @@ if mode == "Model training":
                 df.columns,
             )
             st.write("Dependent (x) variables selected:", x_vars)
-
-        with col3:
-            drop_vars = st.multiselect(
-                "Choose variables to be dropped from modeling",
-                df.columns,
-            )
-            st.write("Variables selected to be dropped:", drop_vars)
-
+        
+        X = df.filter(x_vars)
+        y = df.filter(y_var)
+        start = time.time()
+        random_searcher = train_model(X, y)
+        end = time.time()
+        st.write(f"time_elapsed: {end - start}")
+        st.write(f"best_score: {random_searcher.best_score_}")
+        st.write(f"test_score: {random_searcher.score(X_test, y_test)}")
 if mode == "Model evaluation":
     if uploaded_csv:
-        st.write("WIP")
+        st.write(random_searcher.best_params_)
