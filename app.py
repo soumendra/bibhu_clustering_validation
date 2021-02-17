@@ -23,7 +23,7 @@ if mode == "Exploratory Data Analysis":
         st.write(df)
 
 if mode == "Model training":
-    if uploaded_csv_judgment:
+    if uploaded_csv:
         y_var = st.selectbox(
             "Choose target variable for prediction",
             df.columns,
@@ -37,5 +37,5 @@ if mode == "Model training":
         st.write("Dependent (x) variables selected:", x_vars)
 
 if mode == "Model evaluation":
-    if uploaded_csv_judgment:
+    if uploaded_csv:
         st.write("WIP")
