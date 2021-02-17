@@ -41,9 +41,6 @@ import pandas as pd
 # )
 
 
-
-
-
 st.sidebar.markdown("# automl v1")
 
 st.sidebar.markdown("## Upload data")
@@ -66,18 +63,29 @@ if mode == "Exploratory Data Analysis":
 
 if mode == "Model training":
     if uploaded_csv:
-        y_var = st.selectbox(
-            "Choose target variable for prediction",
-            df.columns,
-        )
-        st.write("Target variable selected:", y_var)
-        st.markdown("<hr />",unsafe_allow_html=True)
+        st.markdown("<hr />", unsafe_allow_html=True)
 
-        x_vars = st.multiselect(
-            "Choose dependent variables to be used for modeling",
-            df.columns,
-        )
-        st.write("Dependent (x) variables selected:", x_vars)
+        col1, col2, col3 = st.beta_columns(3)
+        with col1:
+            y_var = st.selectbox(
+                "Choose target variable for prediction",
+                df.columns,
+            )
+            st.write("Target variable selected:", y_var)
+
+        with col2:
+            x_vars = st.multiselect(
+                "Choose dependent variables to be used for modeling",
+                df.columns,
+            )
+            st.write("Dependent (x) variables selected:", x_vars)
+
+        with col3:
+            drop_vars = st.multiselect(
+                "Choose variables to be dropped from modeling",
+                df.columns,
+            )
+            st.write("Variables selected to be dropped:", drop_vars)
 
 if mode == "Model evaluation":
     if uploaded_csv:
