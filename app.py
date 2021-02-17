@@ -82,15 +82,15 @@ if mode == "Model training":
                 df.columns,
             )
             st.write("Dependent (x) variables selected:", x_vars)
-        
+
         X = df.filter(x_vars)
         y = df.filter(y_var)
         start = time.time()
-        random_searcher = train_model(X, y)
+        random_searcher, test_score = train_model(X, y)
         end = time.time()
         st.write(f"time_elapsed: {end - start}")
         st.write(f"best_score: {random_searcher.best_score_}")
-        st.write(f"test_score: {random_searcher.score(X_test, y_test)}")
+        st.write(f"test_score: {test_score}")
 if mode == "Model evaluation":
     if uploaded_csv:
         st.write(random_searcher.best_params_)
