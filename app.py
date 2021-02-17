@@ -85,12 +85,17 @@ if mode == "Model training":
 
         X = df.filter(x_vars)
         y = df.filter(y_var)
-        start = time.time()
-        random_searcher, test_score = train_model(X, y)
-        end = time.time()
-        st.write(f"time_elapsed: {end - start}")
-        st.write(f"best_score: {random_searcher.best_score_}")
-        st.write(f"test_score: {test_score}")
+
+        if st.button('Start training'):
+            start = time.time()
+            random_searcher, test_score = train_model(X, y)
+            end = time.time()
+            st.write(f"time_elapsed: {end - start}")
+            st.write(f"best_score: {random_searcher.best_score_}")
+            st.write(f"test_score: {test_score}")
+        else:
+            st.write('Training to begin')
+
 if mode == "Model evaluation":
     if uploaded_csv:
         st.write(random_searcher.best_params_)
