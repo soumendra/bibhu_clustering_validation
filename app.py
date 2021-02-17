@@ -24,7 +24,17 @@ if mode == "Exploratory Data Analysis":
 
 if mode == "Model training":
     if uploaded_csv_judgment:
-        st.write("WIP")
+        y_var = st.selectbox(
+            "Choose target variable for prediction",
+            df.columns,
+        )
+        st.write("Target variable selected:", y_var)
+        
+        x_vars = st.multiselect(
+            "Choose dependent variables to be used for modeling",
+            df.columns,
+        )
+        st.write("Dependent (x) variables selected:", x_vars)
 
 if mode == "Model evaluation":
     if uploaded_csv_judgment:
