@@ -2,7 +2,7 @@ from sklearn.compose import ColumnTransformer  # type:ignore
 from sklearn.ensemble import RandomForestRegressor  # type:ignore
 from sklearn.model_selection import RandomizedSearchCV, train_test_split  # type:ignore
 from sklearn.pipeline import Pipeline  # type:ignore
-from sklearn.preprocessing import OneHotEncoder, StandardScaler  # type:ignore
+from sklearn.preprocessing import OneHotEncoder, StandardScaler, LabelEncoder # type:ignore
 import numpy as np
 import scipy as sp  # type:ignore
 
@@ -43,7 +43,7 @@ def train_model(X, y):
                 X, y, test_size=0.2, random_state=2021,
             )
 
-    categorical_transformer = OneHotEncoder(handle_unknown="ignore")
+    categorical_transformer = LabelEncoder() # OneHotEncoder(handle_unknown="ignore")
     numeric_transformer = StandardScaler()
     preprocessor = ColumnTransformer(
         transformers=[
@@ -72,6 +72,15 @@ def train_model(X, y):
     random_searcher.fit(X_train, y_train)
     test_score = random_searcher.score(X_test, y_test)
 
-    return random_searcher, test_score
+    results = {
+        "model": random_searcher,
+        "test_score": test_score,
+        "X_train": X_train,
+        "y_train": y_train,
+        "X_test": X_test,
+        "y_test": y_test,
+    }
+
+    return results
 
 

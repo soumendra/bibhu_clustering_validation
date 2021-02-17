@@ -74,28 +74,25 @@ if mode == "Model training":
                 "Choose target variable for prediction",
                 df.columns,
             )
-            st.write("Target variable selected:", y_var)
 
         with col2:
             x_vars = st.multiselect(
                 "Choose dependent variables to be used for modeling",
                 df.columns,
             )
-            st.write("Dependent (x) variables selected:", x_vars)
 
         X = df.filter(x_vars)
-        y = df.filter(y_var)
+        y = df.loc[: ,y_var]
 
         if st.button('Start training'):
             start = time.time()
-            random_searcher, test_score = train_model(X, y)
+            results = train_model(X, y)
             end = time.time()
             st.write(f"time_elapsed: {end - start}")
-            st.write(f"best_score: {random_searcher.best_score_}")
-            st.write(f"test_score: {test_score}")
-        else:
-            st.write('Training to begin')
+            st.write(f"best_score: {results['model'].best_score_}")
+            st.write(f"test_score: {results['test_score']}")
+
 
 if mode == "Model evaluation":
     if uploaded_csv:
-        st.write(random_searcher.best_params_)
+        st.write(results["model"].best_params_)
