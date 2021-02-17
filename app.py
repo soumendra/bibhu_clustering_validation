@@ -28,7 +28,7 @@ st.markdown(
 footer {
     font-family: monospace;
 }
-.reportview-container .main footer, .reportview-container .main footer a {
+.reportview-container .main footer, .reportview-container .main .csv footer a {
     color: #0c0080;
 }
 header .decoration {
