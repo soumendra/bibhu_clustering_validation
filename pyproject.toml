@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "bibhu_clustering_validation"
+version = "0.1.0"
+description = ""
+authors = ["Soumendra Dhanee <soumendra@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "3.8.6"
+numpy = "^1.20.1"
+pandas = "^1.2.2"
+scikit-learn = "^0.24.1"
+matplotlib = "^3.3.4"
+pydantic = "^1.7.3"
+streamlit = "^0.76.0"
+
+[tool.poetry.dev-dependencies]
+black = "^20.8b1"
+isort = "^5.7.0"
+flake8 = "^3.8.4"
+mypy = "^0.800"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
