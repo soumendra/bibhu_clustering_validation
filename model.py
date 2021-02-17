@@ -69,11 +69,8 @@ def train_model(X, y):
         scoring="neg_mean_squared_error",
     )
 
-    try:
-        random_searcher.fit(X_train, y_train)
-        test_score = random_searcher.score(X_test, y_test)
-    except:
-        print(f"Model training failed!")
+    random_searcher.fit(X_train, y_train)
+    test_score = random_searcher.score(X_test, y_test)
 
     return random_searcher, test_score
 
