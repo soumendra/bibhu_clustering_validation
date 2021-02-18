@@ -4,6 +4,7 @@ import time
 from model import train_model
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.inspection import permutation_importance
 
 # st.markdown(
 #     """
@@ -125,6 +126,12 @@ if mode == "Model training":
             plt.xticks(range(X.shape[1]), indices)
             plt.xlim([-1, X.shape[1]])
             st.pyplot(fig)
+
+            # r = permutation_importance(forest, results["X_test"], results["y_test"], n_repeats=300, random_state=0)
+            # st.write(r.importances_mean)
+            # for i in r.importances_mean:
+            #     # if r.importances_mean[i] - 2 * r.importances_std[i] > 0:
+            #         st.write(f"{x_vars[i]} \t {r.importances_mean[i]:.3f} \t  +/- {r.importances_std[i]:.3f}")
 
 
 if mode == "Model evaluation":
