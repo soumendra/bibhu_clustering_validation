@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import time
 from model import train_model
+import numpy as np
+import matplotlib.pyplot as plt
 
 # st.markdown(
 #     """
@@ -71,18 +73,22 @@ if mode == "Model training":
         col1, col2 = st.beta_columns(2)
         with col1:
             y_var = st.selectbox(
-                "Choose target variable for prediction",
-                df.columns,
+                label="Choose target variable for prediction",
+                options=df.columns,
+                index=len(df.columns)-1,
             )
 
         with col2:
             x_vars = st.multiselect(
-                "Choose dependent variables to be used for modeling",
-                df.columns,
+                label="Choose dependent variables to be used for modeling",
+                options=df.columns,
             )
 
         X = df.filter(x_vars)
-        y = df.loc[: ,y_var]
+        y = df.loc[: , y_var]
+
+        st.write(f"x_vars: {x_vars}")
+        st.write(f"y_var: {y_var}")
 
         if st.button('Start training'):
             start = time.time()
@@ -90,7 +96,35 @@ if mode == "Model training":
             end = time.time()
             st.write(f"time_elapsed: {end - start}")
             st.write(f"best_score: {results['model'].best_score_}")
+            st.write(f"best_params_: {results['model'].best_params_}")
             st.write(f"test_score: {results['test_score']}")
+            st.markdown("<hr />", unsafe_allow_html=True)
+
+            preds = results["model"].predict(results["X_test"])
+            outcome = pd.DataFrame({
+                "preds": preds,
+                "y_test": results["y_test"],
+            })
+            outcome.loc[:, "dev_ration"] = abs(outcome.preds - outcome.y_test)/outcome.y_test
+            st.write(outcome)
+
+            forest = results["model"].best_estimator_["model"]
+            importances = forest.feature_importances_
+            std = np.std([tree.feature_importances_ for tree in forest.estimators_], axis=0)
+            indices = np.argsort(importances)[::-1]
+
+            print("Feature ranking:")
+
+            for f in range(X.shape[1]):
+                print("%d. feature %d (%f)" % (f + 1, indices[f], importances[indices[f]]))
+
+            fig, ax = plt.subplots()
+            # plt.figure()
+            plt.title("Feature importances")
+            plt.bar(range(X.shape[1]), importances[indices], color="r", yerr=std[indices], align="center")
+            plt.xticks(range(X.shape[1]), indices)
+            plt.xlim([-1, X.shape[1]])
+            st.pyplot(fig)
 
 
 if mode == "Model evaluation":
