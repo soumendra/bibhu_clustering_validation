@@ -28,6 +28,14 @@
 * equipment_load/builtup_area
 
 
+# To Do
 
+1. Literature review of predictive models (Bibhu)
+     - Size of datasets (no of features, no of datapoints)
+     - Is the data publicly available
+     - Target values predicted
+     - Algorithms used to train models
+     - What features usually proved to be significant predictors
+2. Literature review of clustering models (Bibhu)
 
 
