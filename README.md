@@ -20,6 +20,7 @@
         - Group 3: 6-12 LPA
         - Group 4: 12-18 LPA
     - builtup_area: (numeric) total builtup area in sq meter
+    - bhk: (int) number of bedrooms
     - equipment_load: (numeric) sum of wattage of major equipments in the household (9 major equipments defined, capturing 90% of load according to existing literature)
 
 ### Suggested features
