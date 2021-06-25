@@ -3,7 +3,8 @@
 ## Goal
 
 * Predict energy consumption of households in Jaipur municipal boundary.
-    - energy consumption = monthly units used
+    - energy consumption = annual units consumed
+* Build archetypes (clusters) of electricity consumption patterns in households
 
 ## Data dictionary
 
