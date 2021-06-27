@@ -109,7 +109,10 @@ if mode == "Model training":
             outcome.loc[:, "dev_ration"] = abs(outcome.preds - outcome.y_test)/outcome.y_test
             st.write(outcome)
             
-            st.pyplot(plt.scatter(outcome["y_test"], outcome["preds"], c="blue"))
+            fig, ax = plt.subplots()
+            plt.title("Moodel performance")
+            plt.scatter(outcome["y_test"], outcome["preds"], c="blue")
+            st.pyplot(fig)
 
             forest = results["model"].best_estimator_["model"]
             importances = forest.feature_importances_
